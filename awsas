@@ -1,0 +1,7 @@
+#!/bin/bash
+# classical load balancer
+#aws ec2 run-instances --instance-type t2.micro --key-name awscli --image-id ami-0f9cf087c1f27d9b1 --user-data file://ud
+#aws ec2 run-instances --instance-type t2.micro --key-name awscli --image-id ami-0f9cf087c1f27d9b1 --user-data file://ud1
+aws elb create-load-balancer --load-balancer-name my-load-balancer --listeners "Protocol=HTTP,LoadBalancerPort=80,InstanceProtocol=HTTP,InstancePort=80" --security-groups sg-01583b4a --availability-zones us-east-1b us-east-1d
+aws elb register-instances-with-load-balancer --load-balancer-name my-load-balancer --instances i-0a3d34dfa62fff09f i-0f7fa137500c23aa2
+

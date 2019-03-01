@@ -1,0 +1,4 @@
+#!/bin/bash
+sudo apt-get install update
+sudo apt-get install -y apache2
+echo "welcome to server2" > /var/www/html/index.html
