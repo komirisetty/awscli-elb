@@ -1,0 +1,41 @@
+---
+Resources:  
+ myins:
+  Type: AWS::EC2::Instance
+  Properties:
+   InstanceType: t2.micro
+   ImageId: ami-0eb1f21bbd66347fe
+   KeyName: pract
+   AvailabilityZone: ap-southeast-1b
+   UserData:
+    sudo apt-get update
+    sudo apt-get install -y apache2
+ myins1:
+  Type: AWS::EC2::Instance
+  Properties:
+   InstanceType: t2.micro
+   ImageId: ami-0eb1f21bbd66347fe
+   KeyName: pract
+   AvailabilityZone: ap-southeast-1a
+   UserData:
+    sudo apt-get update
+    sudo apt-get install -y apache2      
+ myelb:
+  Type: AWS::ElasticLoadBalancing::LoadBalancer
+  Properties:
+   LoadBalancerName: myelb
+   Listeners:
+    - Protocol=HTTP
+    - LoadBalancerPort=80
+    - InstanceProtocol=HTTP
+    - InstancePort=80
+   SecurityGroups:
+    - sg-98dd59e2
+   CrossZone: true  
+   Instances:
+    - Ref: myins
+    - Ref: myins1
+   AvailabilityZones:
+    - ap-southeast-1a
+    - ap-southeast-1b
+...
